@@ -87,9 +87,10 @@ td {
   border-bottom: 1px solid #eaeaea;
 }
 
-tr:hover {
+tbody tr:hover {
   background-color: #f1f5f9;
 }
+
 
 /* Links na tabela */
 a {
