@@ -1,54 +1,87 @@
-# React + TypeScript + Vite
+# 💼 Banco Fictício — Desafio Banestes 2025
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema web desenvolvido como parte do processo seletivo para o estágio no Banestes.  
+Simula uma interface bancária com listagem de clientes, dashboard financeiro e login fictício.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Acesso rápido
 
-## Expanding the ESLint configuration
+- Página inicial: `/`
+- Dashboard: `/dashboard`
+- Página de login: `/login`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🧰 Tecnologias utilizadas
+
+- [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- TypeScript
+- Bootstrap 5
+- React Router DOM
+- LocalStorage (simulação de sessão)
+- Exportação CSV
+
+---
+
+## ✨ Funcionalidades
+
+- ✅ **Login fictício** com e-mail e senha pré-definidos
+- ✅ **Redirecionamento automático** para `/login` se não estiver logado
+- ✅ **Proteção de rotas** com `PrivateRoute`
+- ✅ **Dashboard de Renda** com gráfico
+- ✅ **Listagem de clientes** com busca e exportação CSV
+- ✅ **Tema claro/escuro**
+- ✅ **Botão de logout** funcional
+- ✅ **Saudação personalizada** no header
+- ✅ **Página 404 personalizada**
+
+---
+
+## 🧪 Login de demonstração
+
+| Campo   | Valor                    |
+|---------|--------------------------|
+| E-mail  | demo@banestes.com.br     |
+| Senha   | 123456                   |
+
+---
+
+## 🚀 Como rodar o projeto
+
+```bash
+# Instale as dependências
+npm install
+
+# Rode o projeto em modo dev
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> ⚠️ Certifique-se de ter o Node.js e o Vite instalados corretamente.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 📁 Estrutura de pastas (parcial)
+
 ```
+src/
+├── pages/
+│   ├── Home.tsx
+│   ├── Dashboard.tsx
+│   ├── Login.tsx
+│   ├── Cliente.tsx
+│   └── PaginaNaoEncontrada.tsx
+├── components/
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   └── PrivateRoute.tsx
+```
+
+---
+
+## 🧑‍💻 Desenvolvido por
+
+Lenon Merlo  
+[linkedin.com/in/lenonmerlo](https://linkedin.com/in/lenonmerlo)
+
+---

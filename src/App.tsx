@@ -1,19 +1,48 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./pages/Home";
-import Cliente from "./pages/Cliente";
 import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Cliente from "./pages/Cliente";
+import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cliente/:cpfCnpj" element={<Cliente />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cliente/:cpfCnpj"
+          element={
+            <PrivateRoute>
+              <Cliente />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<PaginaNaoEncontrada />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
 
