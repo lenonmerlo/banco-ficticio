@@ -34,7 +34,7 @@ interface ClienteBuscaProps {
       <input
         type="text"
         className="form-control mb-4 shadow-sm"
-        placeholder="Buscar por nome ou CPF/CNPJ..."
+        placeholder="Buscar por CPF/CNPJ..."
         value={valor}
         onChange={handleInput}
       />
