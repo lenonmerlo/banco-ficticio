@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useBank } from "../context/BankContext";
 import { Link } from "react-router-dom";
-import FiltroForm from "../components/dashboard/FiltroForm";
+import FilterForm from "../components/dashboard/FilterForm";
 import InfoCards from "../components/dashboard/InfoCards";
-import RendaChart from "../components/dashboard/RendaChart";
+import RendaChart from "../components/dashboard/IncomeChart";
 
 export default function Dashboard() {
   const { clientes } = useBank();
@@ -32,7 +32,7 @@ export default function Dashboard() {
 
       <div className="row">
         <div className="col-md-3">
-          <FiltroForm setFiltros={setFiltros} />
+          <FilterForm setFiltros={setFiltros} />
         </div>
         <div className="col-md-9">
           {dadosFiltrados.length > 0 && (

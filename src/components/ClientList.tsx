@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useBank } from "../context/BankContext";
 import { paginate } from "../utils/pagination";
-import { filterClientes } from "../utils/filtro";
-import ClienteBusca from "../components/ClienteBusca";
-import ClienteTabelaHeader from "../components/ClienteTabelaHeader";
-import ClienteTabelaBody from "../components/ClienteTabelaBody";
-import ExportarCsv from "../components/ExportarCsv";
+import { filterClientes } from "../utils/filter";
+import ClientSearch from "../components/ClientSearch";
+import ClientTableHeader from "../components/ClientTableHeader";
+import ClientTableBody from "../components/ClientTableBody";
+import ExportarCsv from "../components/ExportCsv";
 
-export default function ClienteList() {
+export default function ClientList() {
   const { clientes } = useBank();
   const [searchParams, setSearchParams] = useSearchParams();
   const [termoBusca, setTermoBusca] = useState("");
@@ -50,7 +50,7 @@ export default function ClienteList() {
 
       <div className="d-flex justify-content-between align-items-start gap-3 mb-3 flex-wrap">
         <ExportarCsv clientes={clientesPaginados} />
-        <ClienteBusca
+        <ClientSearch
           valor={termoBusca}
           onChange={(valor) => {
             setTermoBusca(valor);
@@ -60,12 +60,12 @@ export default function ClienteList() {
       </div>
 
       <table className="table table-bordered table-hover">
-        <ClienteTabelaHeader
+        <ClientTableHeader
           ordenarPor={ordenarPor}
           ordemAscendente={ordemAscendente}
           aoClicar={aoClicarColuna}
         />
-        <ClienteTabelaBody clientes={clientesPaginados} />
+        <ClientTableBody clientes={clientesPaginados} />
       </table>
 
       <div className="d-flex justify-content-between align-items-center mt-3">

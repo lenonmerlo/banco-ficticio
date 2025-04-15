@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useBank } from "../context/BankContext";
 
-export default function ClienteDetails() {
+export default function ClientDetails() {
   const { cpfCnpj } = useParams();
   const { clientes, contas, agencias, carregando } = useBank();
 

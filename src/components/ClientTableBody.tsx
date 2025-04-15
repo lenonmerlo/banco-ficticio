@@ -1,7 +1,7 @@
 import { Cliente } from "../types";
 import { formatarCpfCnpj } from "../utils/formatters";
 
-export default function ClienteTabelaBody({ clientes }: { clientes: Cliente[] }) {
+export default function ClientTableBody({ clientes }: { clientes: Cliente[] }) {
   return (
     <tbody>
       {clientes.map((cliente) => (

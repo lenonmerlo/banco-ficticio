@@ -24,7 +24,7 @@ interface ClienteBuscaProps {
     }
   };
   
-  export default function ClienteBusca({ valor, onChange }: ClienteBuscaProps) {
+  export default function ClientSearch({ valor, onChange }: ClienteBuscaProps) {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
       const formatado = aplicarMascaraCpfCnpj(e.target.value);
       onChange(formatado);

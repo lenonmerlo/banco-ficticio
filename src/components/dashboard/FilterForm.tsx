@@ -2,7 +2,7 @@ interface Props {
   setFiltros: (f: { nome: string; rendaMin: number; rendaMax: number }) => void;
 }
 
-export default function FiltroForm({ setFiltros }: Props) {
+export default function FilterForm({ setFiltros }: Props) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const nome = (e.currentTarget.nome as HTMLInputElement).value;

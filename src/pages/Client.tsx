@@ -1,9 +1,9 @@
-import ClienteDetails from "../components/ClienteDetails";
+import ClientDetails from "../components/ClientDetails";
 
 export default function Cliente() {
   return (
     <main className="bg-light min-vh-100">
-      <ClienteDetails />
+      <ClientDetails />
     </main>
   );
 }

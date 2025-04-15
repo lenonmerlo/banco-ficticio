@@ -3,10 +3,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import Cliente from "./pages/Cliente";
+import Cliente from "./pages/Client";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
-import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada";
+import PaginaNaoEncontrada from "./pages/PageNotFound";
 
 function App() {
   return (

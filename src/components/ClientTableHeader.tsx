@@ -4,7 +4,7 @@ interface Props {
     aoClicar: (coluna: string) => void;
   }
   
-  export default function ClienteTabelaHeader({ ordenarPor, ordemAscendente, aoClicar }: Props) {
+  export default function ClientTableHeader({ ordenarPor, ordemAscendente, aoClicar }: Props) {
     const seta = (coluna: string) =>
       ordenarPor === coluna ? (ordemAscendente ? "▲" : "▼") : "";
   
