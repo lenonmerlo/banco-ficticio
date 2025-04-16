@@ -20,7 +20,7 @@ html {
   --input-bg: #fff;
 }
 
-/* Reset básico */
+/* Basic Reset */
 * {
   margin: 0;
   padding: 0;
@@ -34,6 +34,14 @@ body {
   line-height: 1.6;
   padding-bottom: 2rem;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
 
 header {
   background-color: var(--header-bg);
@@ -175,14 +183,17 @@ button:hover:not(:disabled) {
   h1 {
     font-size: 1.5rem;
   }
+
   th,
   td {
     padding: 0.6rem;
   }
+
   button {
     padding: 0.4rem 1rem;
     font-size: 0.9rem;
   }
+
   .container {
     padding: 0 0.5rem;
   }

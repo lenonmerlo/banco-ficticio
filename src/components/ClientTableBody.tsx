@@ -1,22 +1,22 @@
-import { Cliente } from "../types";
-import { formatarCpfCnpj } from "../utils/formatters";
+import { Client } from "../types";
+import { formatCpfCnpj } from "../utils/formatters";
 
-export default function ClientTableBody({ clientes }: { clientes: Cliente[] }) {
+export default function ClientTableBody({ clients }: { clients: Client[] }) {
   return (
     <tbody>
-      {clientes.map((cliente) => (
-        <tr key={cliente.id}>
+      {clients.map((client) => (
+        <tr key={client.id}>
           <td>
             <a
-              href={`/cliente/${cliente.cpfCnpj}`}
+              href={`/cliente/${client.cpfCnpj}`}
               className="text-decoration-none fw-bold text-primary"
             >
-              {cliente.nome}
+              {client.name}
             </a>
           </td>
-          <td>{formatarCpfCnpj(cliente.cpfCnpj)}</td>
-          <td>{cliente.email}</td>
-          <td>R$ {cliente.rendaAnual.toLocaleString("pt-BR")}</td>
+          <td>{formatCpfCnpj(client.cpfCnpj)}</td>
+          <td>{client.email}</td>
+          <td>R$ {client.annualIncome.toLocaleString("pt-BR")}</td>
         </tr>
       ))}
     </tbody>

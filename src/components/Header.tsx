@@ -2,39 +2,39 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function Header() {
-  const [tema, setTema] = useState("light");
-  const [usuario, setUsuario] = useState<{ nome: string } | null>(null);
+  const [theme, setTheme] = useState("light");
+  const [user, setUser] = useState<{ name: string } | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const temaSalvo = localStorage.getItem("tema");
-    if (temaSalvo) {
-      setTema(temaSalvo);
-      document.documentElement.classList.toggle("dark", temaSalvo === "dark");
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle("dark", savedTheme === "dark");
     } else {
-      const sistemaPrefereDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const temaInicial = sistemaPrefereDark ? "dark" : "light";
-      setTema(temaInicial);
-      document.documentElement.classList.toggle("dark", sistemaPrefereDark);
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const initialTheme = prefersDark ? "dark" : "light";
+      setTheme(initialTheme);
+      document.documentElement.classList.toggle("dark", prefersDark);
     }
 
-    const dados = localStorage.getItem("usuario");
-    if (dados) {
-      setUsuario(JSON.parse(dados));
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
     }
   }, []);
 
-  const alternarTema = () => {
-    const novoTema = tema === "dark" ? "light" : "dark";
-    setTema(novoTema);
-    document.documentElement.classList.toggle("dark", novoTema === "dark");
-    localStorage.setItem("tema", novoTema);
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
   };
 
-  const sair = () => {
-    localStorage.removeItem("logado");
-    localStorage.removeItem("usuario");
+  const logout = () => {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("user");
     navigate("/login");
   };
 
@@ -48,18 +48,18 @@ export default function Header() {
       </Link>
 
       <div className="d-flex gap-2 align-items-center">
-        {usuario && location.pathname !== "/login" && (
+        {user && location.pathname !== "/login" && (
           <span className="text-white me-2">
-            Sessão ativa: {usuario.nome}
+            Sessão ativa: {user.name}
           </span>
         )}
-        <button onClick={alternarTema} className="btn btn-outline-light btn-sm">
-          {tema === "dark" ? "☀️ Claro" : "🌙 Escuro"}
+        <button onClick={toggleTheme} className="btn btn-outline-light btn-sm">
+          {theme === "dark" ? "☀️ Claro" : "🌙 Escuro"}
         </button>
         <Link to="/dashboard" className="btn btn-outline-light btn-sm">
           📊 Dashboard
         </Link>
-        <button onClick={sair} className="btn btn-outline-light btn-sm">
+        <button onClick={logout} className="btn btn-outline-light btn-sm">
           🚪 Sair
         </button>
       </div>

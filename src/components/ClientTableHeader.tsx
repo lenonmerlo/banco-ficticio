@@ -1,30 +1,29 @@
 interface Props {
-    ordenarPor: string;
-    ordemAscendente: boolean;
-    aoClicar: (coluna: string) => void;
-  }
-  
-  export default function ClientTableHeader({ ordenarPor, ordemAscendente, aoClicar }: Props) {
-    const seta = (coluna: string) =>
-      ordenarPor === coluna ? (ordemAscendente ? "▲" : "▼") : "";
-  
-    return (
-      <thead className="table-primary text-white">
-        <tr>
-          <th onClick={() => aoClicar("nome")} style={{ cursor: "pointer" }}>
-            Nome {seta("nome")}
-          </th>
-          <th onClick={() => aoClicar("cpfCnpj")} style={{ cursor: "pointer" }}>
-            CPF/CNPJ {seta("cpfCnpj")}
-          </th>
-          <th onClick={() => aoClicar("email")} style={{ cursor: "pointer" }}>
-            Email {seta("email")}
-          </th>
-          <th onClick={() => aoClicar("rendaAnual")} style={{ cursor: "pointer" }}>
-            Renda Anual {seta("rendaAnual")}
-          </th>
-        </tr>
-      </thead>
-    );
-  }
-  
+  sortBy: string;
+  isAscending: boolean;
+  onClick: (column: string) => void;
+}
+
+export default function ClientTableHeader({ sortBy, isAscending, onClick }: Props) {
+  const arrow = (column: string) =>
+    sortBy === column ? (isAscending ? "▲" : "▼") : "";
+
+  return (
+    <thead className="table-primary text-white">
+      <tr>
+        <th onClick={() => onClick("nome")} style={{ cursor: "pointer" }}>
+          Nome {arrow("nome")}
+        </th>
+        <th onClick={() => onClick("cpfCnpj")} style={{ cursor: "pointer" }}>
+          CPF/CNPJ {arrow("cpfCnpj")}
+        </th>
+        <th onClick={() => onClick("email")} style={{ cursor: "pointer" }}>
+          Email {arrow("email")}
+        </th>
+        <th onClick={() => onClick("rendaAnual")} style={{ cursor: "pointer" }}>
+          Renda Anual {arrow("rendaAnual")}
+        </th>
+      </tr>
+    </thead>
+  );
+}

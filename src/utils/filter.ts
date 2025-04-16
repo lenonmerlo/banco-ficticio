@@ -1,10 +1,10 @@
-import { Cliente } from "../types";
+import { Client } from "../types";
 
-export function filterClientes(clientes: Cliente[], termo: string): Cliente[] {
-  const lowerTermo = termo.toLowerCase();
-  return clientes.filter(
+export function filterClients(clients: Client[], term: string): Client[] {
+  const lowerTerm = term.toLowerCase();
+  return clients.filter(
     (c) =>
-      c.nome.toLowerCase().includes(lowerTermo) ||
-      c.cpfCnpj.includes(termo)
+      (c.name ?? "").toLowerCase().includes(lowerTerm) ||
+      (c.cpfCnpj ?? "").includes(term)
   );
 }

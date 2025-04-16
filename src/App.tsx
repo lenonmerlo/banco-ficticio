@@ -1,24 +1,24 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
+import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
-import Cliente from "./pages/Client";
-import Login from "./pages/Login";
+import ClientPage from "./pages/ClientPage";
+import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
-import PaginaNaoEncontrada from "./pages/PageNotFound";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/"
           element={
             <PrivateRoute>
-              <Home />
+              <HomePage />
             </PrivateRoute>
           }
         />
@@ -34,12 +34,11 @@ function App() {
           path="/cliente/:cpfCnpj"
           element={
             <PrivateRoute>
-              <Cliente />
+              <ClientPage />
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<Navigate to="/login" />} />
-        <Route path="*" element={<PaginaNaoEncontrada />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </>

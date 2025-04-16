@@ -2,45 +2,45 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useBank } from "../context/BankContext";
 import { paginate } from "../utils/pagination";
-import { filterClientes } from "../utils/filter";
+import { filterClients } from "../utils/filter";
 import ClientSearch from "../components/ClientSearch";
 import ClientTableHeader from "../components/ClientTableHeader";
 import ClientTableBody from "../components/ClientTableBody";
-import ExportarCsv from "../components/ExportCsv";
+import ExportCsv from "../components/ExportCsv";
 
 export default function ClientList() {
-  const { clientes } = useBank();
+  const { clients } = useBank();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [termoBusca, setTermoBusca] = useState("");
-  const [ordenarPor, setOrdenarPor] = useState("nome");
-  const [ordemAscendente, setOrdemAscendente] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("nome");
+  const [isAscending, setIsAscending] = useState(true);
 
-  const paginaAtual = Number(searchParams.get("page")) || 1;
-  const itemsPorPagina = 10;
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const itemsPerPage = 10;
 
-  const clientesFiltrados = filterClientes(clientes, termoBusca);
-  const clientesOrdenados = [...clientesFiltrados].sort((a, b) => {
-    const valorA = a[ordenarPor as keyof typeof a];
-    const valorB = b[ordenarPor as keyof typeof b];
+  const filteredClients = filterClients(clients, searchTerm);
+  const sortedClients = [...filteredClients].sort((a, b) => {
+    const valueA = a[sortBy as keyof typeof a];
+    const valueB = b[sortBy as keyof typeof b];
 
-    if (typeof valorA === "number" && typeof valorB === "number") {
-      return ordemAscendente ? valorA - valorB : valorB - valorA;
+    if (typeof valueA === "number" && typeof valueB === "number") {
+      return isAscending ? valueA - valueB : valueB - valueA;
     }
 
-    return ordemAscendente
-      ? String(valorA).localeCompare(String(valorB))
-      : String(valorB).localeCompare(String(valorA));
+    return isAscending
+      ? String(valueA).localeCompare(String(valueB))
+      : String(valueB).localeCompare(String(valueA));
   });
 
-  const clientesPaginados = paginate(clientesOrdenados, paginaAtual, itemsPorPagina);
-  const totalPaginas = Math.ceil(clientesOrdenados.length / itemsPorPagina);
+  const paginatedClients = paginate(sortedClients, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(sortedClients.length / itemsPerPage);
 
-  const aoClicarColuna = (coluna: string) => {
-    if (ordenarPor === coluna) {
-      setOrdemAscendente(!ordemAscendente);
+  const handleColumnClick = (column: string) => {
+    if (sortBy === column) {
+      setIsAscending(!isAscending);
     } else {
-      setOrdenarPor(coluna);
-      setOrdemAscendente(true);
+      setSortBy(column);
+      setIsAscending(true);
     }
   };
 
@@ -49,11 +49,11 @@ export default function ClientList() {
       <h1 className="mb-4 text-primary">Lista de Clientes</h1>
 
       <div className="d-flex justify-content-between align-items-start gap-3 mb-3 flex-wrap">
-        <ExportarCsv clientes={clientesPaginados} />
+        <ExportCsv clients={paginatedClients} />
         <ClientSearch
-          valor={termoBusca}
-          onChange={(valor) => {
-            setTermoBusca(valor);
+          value={searchTerm}
+          onChange={(value) => {
+            setSearchTerm(value);
             setSearchParams({ page: "1" });
           }}
         />
@@ -61,26 +61,26 @@ export default function ClientList() {
 
       <table className="table table-bordered table-hover">
         <ClientTableHeader
-          ordenarPor={ordenarPor}
-          ordemAscendente={ordemAscendente}
-          aoClicar={aoClicarColuna}
+          sortBy={sortBy}
+          isAscending={isAscending}
+          onClick={handleColumnClick}
         />
-        <ClientTableBody clientes={clientesPaginados} />
+        <ClientTableBody clients={paginatedClients} />
       </table>
 
       <div className="d-flex justify-content-between align-items-center mt-3">
         <button
           className="btn btn-primary btn-sm"
-          disabled={paginaAtual === 1}
-          onClick={() => setSearchParams({ page: String(Math.max(paginaAtual - 1, 1)) })}
+          disabled={currentPage === 1}
+          onClick={() => setSearchParams({ page: String(Math.max(currentPage - 1, 1)) })}
         >
           Anterior
         </button>
-        <span className="text-muted">Página {paginaAtual} de {totalPaginas}</span>
+        <span className="text-muted">Página {currentPage} de {totalPages}</span>
         <button
           className="btn btn-primary btn-sm"
-          disabled={paginaAtual === totalPaginas}
-          onClick={() => setSearchParams({ page: String(Math.min(paginaAtual + 1, totalPaginas)) })}
+          disabled={currentPage === totalPages}
+          onClick={() => setSearchParams({ page: String(Math.min(currentPage + 1, totalPages)) })}
         >
           Próxima
         </button>

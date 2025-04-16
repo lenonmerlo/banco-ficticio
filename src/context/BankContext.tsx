@@ -1,75 +1,86 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Cliente, Conta, Agencia } from "../types";
+import { Client, Account, Agency } from "../types";
 import { fetchCSV } from "../services/fetchCSV";
 
-const URL_CLIENTES =
+const URL_CLIENTS =
   "https://docs.google.com/spreadsheets/d/1PBN_HQOi5ZpKDd63mouxttFvvCwtmY97Tb5if5_cdBA/gviz/tq?tqx=out:csv&sheet=clientes";
-const URL_CONTAS =
+const URL_ACCOUNTS =
   "https://docs.google.com/spreadsheets/d/1PBN_HQOi5ZpKDd63mouxttFvvCwtmY97Tb5if5_cdBA/gviz/tq?tqx=out:csv&sheet=contas";
-const URL_AGENCIAS =
+const URL_AGENCIES =
   "https://docs.google.com/spreadsheets/d/1PBN_HQOi5ZpKDd63mouxttFvvCwtmY97Tb5if5_cdBA/gviz/tq?tqx=out:csv&sheet=agencias";
 
 interface BankContextType {
-  clientes: Cliente[];
-  contas: Conta[];
-  agencias: Agencia[];
-  carregando: boolean;
+  clients: Client[];
+  accounts: Account[];
+  agencies: Agency[];
+  loading: boolean;
 }
 
 const BankContext = createContext<BankContextType>({
-  clientes: [],
-  contas: [],
-  agencias: [],
-  carregando: true,
+  clients: [],
+  accounts: [],
+  agencies: [],
+  loading: true,
 });
 
 export const useBank = () => useContext(BankContext);
 
 export function BankProvider({ children }: { children: ReactNode }) {
-  const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [contas, setContas] = useState<Conta[]>([]);
-  const [agencias, setAgencias] = useState<Agencia[]>([]);
-  const [carregando, setCarregando] = useState(true);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [agencies, setAgencies] = useState<Agency[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const carregarTudo = async () => {
-      const [clientesCSV, contasCSV, agenciasCSV] = await Promise.all([
-        fetchCSV<Cliente>(URL_CLIENTES),
-        fetchCSV<Conta>(URL_CONTAS),
-        fetchCSV<Agencia>(URL_AGENCIAS),
+    const loadAll = async () => {
+      const [clientsCSV, accountsCSV, agenciesCSV] = await Promise.all([
+        fetchCSV(URL_CLIENTS),
+        fetchCSV(URL_ACCOUNTS),
+        fetchCSV(URL_AGENCIES),
       ]);
 
-      const normalizados = clientesCSV.map((c) => ({
-        ...c,
-        dataNascimento: new Date(c.dataNascimento),
-        rendaAnual: Number(c.rendaAnual),
-        patrimonio: Number(c.patrimonio),
-        codigoAgencia: Number(c.codigoAgencia),
+      const normalizedClients: Client[] = clientsCSV.map((c: any) => ({
+        name: c.nome,
+        cpfCnpj: c.cpfCnpj,
+        email: c.email,
+        birthDate: new Date(c.dataNascimento),
+        annualIncome: Number(c.rendaAnual),
+        assets: Number(c.patrimonio),
+        address: c.endereco,
+        maritalStatus: c.estadoCivil,
+        socialName: c.nomeSocial,
+        agencyCode: Number(c.codigoAgencia),
+        id: c.id,
+        rg: c.rg,
       }));
 
-      const contasNormalizadas = contasCSV.map((c) => ({
-        ...c,
-        saldo: Number(c.saldo),
-        limiteCredito: Number(c.limiteCredito),
-        creditoDisponivel: Number(c.creditoDisponivel),
+      const normalizedAccounts: Account[] = accountsCSV.map((c: any) => ({
+        id: c.id,
+        clientCpfCnpj: c.cpfCnpjCliente,
+        type: c.tipo,
+        balance: Number(c.saldo),
+        creditLimit: Number(c.limiteCredito),
+        availableCredit: Number(c.creditoDisponivel),
       }));
 
-      const agenciasNormalizadas = agenciasCSV.map((a) => ({
-        ...a,
-        codigo: Number(a.codigo),
+      const normalizedAgencies: Agency[] = agenciesCSV.map((a: any) => ({
+        id: a.id,
+        code: Number(a.codigo),
+        name: a.nome,
+        address: a.endereco,
       }));
 
-      setClientes(normalizados);
-      setContas(contasNormalizadas);
-      setAgencias(agenciasNormalizadas);
-      setCarregando(false);
+      setClients(normalizedClients);
+      setAccounts(normalizedAccounts);
+      setAgencies(normalizedAgencies);
+      setLoading(false);
     };
 
-    carregarTudo();
+    loadAll();
   }, []);
 
   return (
-    <BankContext.Provider value={{ clientes, contas, agencias, carregando }}>
+    <BankContext.Provider value={{ clients, accounts, agencies, loading }}>
       {children}
     </BankContext.Provider>
   );

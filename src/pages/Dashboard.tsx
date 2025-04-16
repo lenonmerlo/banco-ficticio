@@ -1,24 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBank } from "../context/BankContext";
 import { Link } from "react-router-dom";
 import FilterForm from "../components/dashboard/FilterForm";
 import InfoCards from "../components/dashboard/InfoCards";
-import RendaChart from "../components/dashboard/IncomeChart";
+import IncomeChart from "../components/dashboard/IncomeChart";
+import { Spinner } from "../components/Spinner";
 
 export default function Dashboard() {
-  const { clientes } = useBank();
-  const [filtros, setFiltros] = useState({ nome: "", rendaMin: 0, rendaMax: Infinity });
+  const [loading, setLoading] = useState(true);
 
-  const dadosFiltrados = clientes
-    .filter(c =>
-      c.nome.toLowerCase().includes(filtros.nome.toLowerCase()) &&
-      c.rendaAnual >= filtros.rendaMin &&
-      c.rendaAnual <= filtros.rendaMax
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const { clients } = useBank();
+  const [filters, setFilters] = useState({ name: "", minIncome: 0, maxIncome: Infinity });
+
+  const filteredData = clients
+    .filter(client =>
+      (client.name ?? "").toLowerCase().includes(filters.name.toLowerCase()) &&
+      (client.annualIncome ?? 0) >= filters.minIncome &&
+      (client.annualIncome ?? 0) <= filters.maxIncome
     )
-    .map(c => ({
-      nome: c.nome.split(" ")[0],
-      renda: c.rendaAnual,
+    .map(client => ({
+      name: client.name?.split(" ")[0] ?? "",
+      income: client.annualIncome ?? 0,
     }));
+
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="container py-4">
@@ -32,14 +49,16 @@ export default function Dashboard() {
 
       <div className="row">
         <div className="col-md-3">
-          <FilterForm setFiltros={setFiltros} />
+          <FilterForm setFilters={setFilters} />
         </div>
         <div className="col-md-9">
-          {dadosFiltrados.length > 0 && (
+          {filteredData.length > 0 ? (
             <>
-              <InfoCards dados={dadosFiltrados} />
-              <RendaChart dados={dadosFiltrados} />
+              <InfoCards data={filteredData} />
+              <IncomeChart data={filteredData} />
             </>
+          ) : (
+            <p className="text-muted">Nenhum dado encontrado com os filtros aplicados.</p>
           )}
         </div>
       </div>

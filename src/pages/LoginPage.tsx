@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function Login() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("demo@banestes.com.br");
-  const [senha, setSenha] = useState("123456");
+  const [password, setPassword] = useState("123456");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email === "demo@banestes.com.br" && senha === "123456") {
-      localStorage.setItem("logado", "true");
-      localStorage.setItem("usuario", JSON.stringify({ nome: "Usuário de Teste", email }));
+    if (email === "demo@banestes.com.br" && password === "123456") {
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("user", JSON.stringify({ name: "Usuário de Teste", email }));
       navigate("/", { replace: true });
     } else {
       alert("Credenciais inválidas.");
@@ -38,8 +38,8 @@ export default function Login() {
             <input
               type="password"
               className="form-control"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
