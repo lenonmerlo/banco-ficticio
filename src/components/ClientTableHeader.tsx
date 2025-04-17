@@ -11,8 +11,8 @@ export default function ClientTableHeader({ sortBy, isAscending, onClick }: Prop
   return (
     <thead className="table-primary text-white">
       <tr>
-        <th onClick={() => onClick("nome")} style={{ cursor: "pointer" }}>
-          Nome {arrow("nome")}
+        <th onClick={() => onClick("name")} style={{ cursor: "pointer" }}>
+          Nome {arrow("name")}
         </th>
         <th onClick={() => onClick("cpfCnpj")} style={{ cursor: "pointer" }}>
           CPF/CNPJ {arrow("cpfCnpj")}
@@ -20,8 +20,8 @@ export default function ClientTableHeader({ sortBy, isAscending, onClick }: Prop
         <th onClick={() => onClick("email")} style={{ cursor: "pointer" }}>
           Email {arrow("email")}
         </th>
-        <th onClick={() => onClick("rendaAnual")} style={{ cursor: "pointer" }}>
-          Renda Anual {arrow("rendaAnual")}
+        <th onClick={() => onClick("annualIncome")} style={{ cursor: "pointer" }}>
+          Renda Anual {arrow("annualIncome")}
         </th>
       </tr>
     </thead>

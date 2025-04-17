@@ -12,7 +12,7 @@ export default function ClientList() {
   const { clients } = useBank();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("nome");
+  const [sortBy, setSortBy] = useState("name");
   const [isAscending, setIsAscending] = useState(true);
 
   const currentPage = Number(searchParams.get("page")) || 1;
